@@ -2,7 +2,7 @@
 
 # Instruction
 
-- First step you should create your machine that will host our containers  
+- First step you should create your machine that will host your containers  
 
 ```sh
 $ docker-machine create --driver virtualbox dev
@@ -20,3 +20,8 @@ $ docker-machine env dev
 $ eval $(docker-machine env dev)
 ```
 
+- Now you can run the containers by below command.
+
+```sh
+$ docker-compose up
+```
