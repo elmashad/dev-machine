@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    rabbitmq:
+      image: rabbitmq:3-management
+      hostname: "rabbit_node_2"
+      ports:
+        - "15672:15672"
+        - "5672:5672"
+      environment:
+        RABBITMQ_DEFAULT_USER: "test1"
+        RABBITMQ_DEFAULT_PASS: "test1"
+      networks:
+        - mynet1
+networks:
+  mynet1:
+    driver: bridge
