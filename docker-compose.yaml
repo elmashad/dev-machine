@@ -15,15 +15,27 @@ services:
     mongo:
       image: mongo
       restart: always
-      container_name: "mongo_service"
+      container_name: "mongodb"
       volumes:
        - mydate:/data/db
       ports:
         - "27017:27017"
       networks:
         - mynet1
+    mysql:
+      image: mysql:latest
+      restart: always
+      container_name: "mysqldb"
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: "root"
+      volumes:
+        - mysqldata:/var/lib/mysql
+
 volumes:
   mydate:
+  mysqldata:
 networks:
   mynet1:
     driver: bridge
