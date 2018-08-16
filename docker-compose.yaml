@@ -12,6 +12,18 @@ services:
         RABBITMQ_DEFAULT_PASS: "test1"
       networks:
         - mynet1
+    mongo:
+      image: mongo
+      restart: always
+      container_name: "mongo_service"
+      volumes:
+       - mydate:/data/db
+      ports:
+        - "27017:27017"
+      networks:
+        - mynet1
+volumes:
+  mydate:
 networks:
   mynet1:
     driver: bridge
