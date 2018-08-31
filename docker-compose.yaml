@@ -1,7 +1,9 @@
 version: '3'
 
 services:
+
     rabbitmq:
+      container_name: "rabbitmq"
       image: rabbitmq:3-management
       hostname: "rabbit_node_2"
       ports:
@@ -12,30 +14,55 @@ services:
         RABBITMQ_DEFAULT_PASS: "test1"
       networks:
         - mynet1
+
+    publisher-app:
+      container_name: "publisher-go-app"
+      build: golang
+      volumes:
+      - .:/var/www
+      ports:
+        - "8022:8022"
+      networks:
+        - mynet1
+      depends_on:
+        - rabbitmq
+
+      working_dir: /var/www/publisher-app
+      command: "/var/www/publisher-app/start.sh"
+
+#    publisher-api:
+#      container_name: "publisher-api"
+#      build: ./publisher-app
+#      networks:
+#        - mynet1
+#      depends_on:
+#        - rabbitmq
+#      volumes:
+#        - ./ :/var/www
+#      working_dir: "/var/www/publisher-app/"
+#      command: "/var/www/publisher-app/run.sh"
+#      ports:
+#        - "8022:8022"
+
     mongo:
       image: mongo
       restart: always
+      user: root
       container_name: "mongodb"
-      volumes:
-       - mydate:/data/db
       ports:
         - "27017:27017"
       networks:
         - mynet1
-    mysql:
-      image: mysql:latest
-      restart: always
-      container_name: "mysqldb"
-      ports:
-        - "3306:3306"
-      environment:
-        MYSQL_ROOT_PASSWORD: "root"
-      volumes:
-        - mysqldata:/var/lib/mysql
 
-volumes:
-  mydate:
-  mysqldata:
+    mysql:
+      image: mysql:5.7
+      container_name: "mysqldb"
+      restart: always
+      ports:
+        - "3308:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: example
+
 networks:
   mynet1:
     driver: bridge

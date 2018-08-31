@@ -1,19 +1,21 @@
-package publisher_app
+package main
 
 import (
-	"./controllers"
-	"./common"
-	"./models"
+	"fmt"
 	"github.com/gorilla/mux"
-	"net/http"
 	"github.com/streadway/amqp"
+	"net/http"
+	"publisher-app/common"
+	"publisher-app/controllers"
+	"publisher-app/models"
 )
 
 func init() {
 	common.SetConfig()
 	models.DbConfigInstance.Connect()
 
-	connection, err := amqp.Dial("amqp://guest:guest@localhost:5672")
+	fmt.Println("good")
+	connection, err := amqp.Dial("amqp://test1:test1@192.168.99.100:5672")
 	if err != nil {
 		panic("could not establish AMQP connection: " + err.Error())
 	}

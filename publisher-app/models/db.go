@@ -1,10 +1,11 @@
 package models
 
 import (
-"github.com/globalsign/mgo"
-"../common"
-"log"
+	"github.com/globalsign/mgo"
+	"log"
+	"publisher-app/common"
 )
+
 type DbConfig struct {
 	Server   string
 	Database string

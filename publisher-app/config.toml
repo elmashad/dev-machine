@@ -1,4 +1,4 @@
-APP_PORT=8000
-DB_MONGO_CONNECTION = "mongodb://127.0.0.1:27117/myevents"
+APP_PORT=8022
+DB_MONGO_CONNECTION = "mongodb://192.168.99.100:27017/myevents"
 RestfulEP_Default    = "localhost:8181"
 Restful_TLS_EP_Default = "localhost:9191"

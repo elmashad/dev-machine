@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"net/http"
-	"fmt"
-	"../models"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
+	"net/http"
+	"publisher-app/models"
 	"strings"
 )
 
@@ -50,7 +50,7 @@ func (eh *eventServiceHandler) FindEventHandler(w http.ResponseWriter, r *http.R
 
 func (eh *eventServiceHandler) AllEventHandler(w http.ResponseWriter, r *http.Request) {
 
-	 err,users :=event.FindEvent()
+	err, users := event.FindEvent()
 
 	if err != nil {
 		w.WriteHeader(500)
@@ -85,5 +85,6 @@ func (eh *eventServiceHandler) NewEventHandler(w http.ResponseWriter, r *http.Re
 		fmt.Fprintf(w, `{"error": "error occured while persisting event %d %s"}`, event.ID, err)
 		return
 	}
+
 	fmt.Fprint(w, `{"id":%d}`, event.ID)
 }

@@ -3,13 +3,13 @@ package main
 import (
 	"github.com/gorilla/mux"
 	"net/http"
-	"github.com/streadway/amqp"
 	"fmt"
+	"github.com/streadway/amqp"
 )
 
 func init() {
 
-	connection, err := amqp.Dial("amqp://guest:guest@localhost:5672")
+	connection, err := amqp.Dial("amqp://test1:test1@192.168.99.100:5672")
 	if err != nil {
 		panic("could not establish AMQP connection: " + err.Error())
 	}
@@ -43,12 +43,13 @@ func init() {
 
 func main() {
 
+	fmt.Println("goood")
 	//ventHandler := controllers.NewEventHandler()
 	r := mux.NewRouter()
 	//eventsrouter := r.PathPrefix("/events").Subrouter()
 	//eventsrouter.Meethods("GET").Path("/{SearchCriteria}/{search}").HandlerFunc(eventHandler.FindEventHandler)
 	//eventsrouter.Methods("GET").Path("").HandlerFunc(eventHandler.AllEventHandler)
 	//eventsrouter.Methods("POST").Path("").HandlerFunc(eventHandler.NewEventHandler)
-	http.ListenAndServe(":8030", r)
+	http.ListenAndServe(":8022", r)
 }
 
