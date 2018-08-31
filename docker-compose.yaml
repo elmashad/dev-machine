@@ -2,66 +2,68 @@ version: '3'
 
 services:
 
-    rabbitmq:
-      container_name: "rabbitmq"
-      image: rabbitmq:3-management
-      hostname: "rabbit_node_2"
-      ports:
-        - "15672:15672"
-        - "5672:5672"
-      environment:
-        RABBITMQ_DEFAULT_USER: "test1"
-        RABBITMQ_DEFAULT_PASS: "test1"
-      networks:
-        - mynet1
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:3-management
+    hostname: "rabbit_node_2"
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "test1"
+      RABBITMQ_DEFAULT_PASS: "test1"
+    networks:
+    - mynet1
 
-    publisher-app:
-      container_name: "publisher-go-app"
-      build: golang
-      volumes:
-      - .:/var/www
-      ports:
-        - "8022:8022"
-      networks:
-        - mynet1
-      depends_on:
-        - rabbitmq
+  publisher-app:
+    container_name: "publisher-go-app"
+    build: golang
+    volumes:
+    - .:/var/www
+    ports:
+    - "8022:8022"
+    networks:
+    - mynet1
+    depends_on:
+    - rabbitmq
 
-      working_dir: /var/www/publisher-app
-      command: "/var/www/publisher-app/start.sh"
+    working_dir: /var/www/publisher-app
+    command: "/var/www/publisher-app/start.sh"
 
-#    publisher-api:
-#      container_name: "publisher-api"
-#      build: ./publisher-app
-#      networks:
-#        - mynet1
-#      depends_on:
-#        - rabbitmq
-#      volumes:
-#        - ./ :/var/www
-#      working_dir: "/var/www/publisher-app/"
-#      command: "/var/www/publisher-app/run.sh"
-#      ports:
-#        - "8022:8022"
+  subscriber-app:
+    container_name: "subscriber-go-app"
+    build: golang
+    volumes:
+    - .:/var/www
+    ports:
+    - "8033:8033"
+    networks:
+    - mynet1
+    depends_on:
+    - rabbitmq
 
-    mongo:
-      image: mongo
-      restart: always
-      user: root
-      container_name: "mongodb"
-      ports:
-        - "27017:27017"
-      networks:
-        - mynet1
+    working_dir: "/var/www/subscriber-app/"
+    command: "/var/www/subscriber-app/start.sh"
 
-    mysql:
-      image: mysql:5.7
-      container_name: "mysqldb"
-      restart: always
-      ports:
-        - "3308:3306"
-      environment:
-        MYSQL_ROOT_PASSWORD: example
+
+  mongo:
+    image: mongo
+    restart: always
+    user: root
+    container_name: "mongodb"
+    ports:
+    - "27017:27017"
+    networks:
+    - mynet1
+
+  mysql:
+    image: mysql:5.7
+    container_name: "mysqldb"
+    restart: always
+    ports:
+    - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
 
 networks:
   mynet1:

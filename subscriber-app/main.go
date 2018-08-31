@@ -43,6 +43,7 @@ func init() {
 
 func main() {
 
+
 	fmt.Println("goood")
 	//ventHandler := controllers.NewEventHandler()
 	r := mux.NewRouter()
@@ -50,6 +51,6 @@ func main() {
 	//eventsrouter.Meethods("GET").Path("/{SearchCriteria}/{search}").HandlerFunc(eventHandler.FindEventHandler)
 	//eventsrouter.Methods("GET").Path("").HandlerFunc(eventHandler.AllEventHandler)
 	//eventsrouter.Methods("POST").Path("").HandlerFunc(eventHandler.NewEventHandler)
-	http.ListenAndServe(":8022", r)
+	http.ListenAndServe(":8033", r)
 }
 
