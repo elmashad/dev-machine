@@ -15,6 +15,21 @@ services:
     networks:
     - mynet1
 
+
+  nginx:
+    image: nginx
+    volumes:
+    - ./data/nginx/:/etc/nginx/conf.d
+    ports:
+    - "80:80"
+    restart: always
+    depends_on:
+    - publisher-app
+    - subscriber-app
+
+    networks:
+      - mynet1
+
   publisher-app:
     container_name: "publisher-go-app"
     build: golang
