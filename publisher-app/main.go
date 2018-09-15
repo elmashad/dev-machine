@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/streadway/amqp"
 	"net/http"
 	"publisher-app/common"
 	"publisher-app/controllers"
@@ -15,29 +14,30 @@ func init() {
 	models.DbConfigInstance.Connect()
 
 	fmt.Println("good")
-	connection, err := amqp.Dial("amqp://test1:test1@192.168.99.100:5672")
-	if err != nil {
-		panic("could not establish AMQP connection: " + err.Error())
-	}
+	//connection, err := amqp.Dial("amqp://test1:test1@192.168.99.100:5672")
+	//if err != nil {
+	//	panic("could not establish AMQP connection: " + err.Error())
+	//}
+	//
+	//channel, err := connection.Channel()
+	//if err != nil {
+	//	panic("could not open channel: " + err.Error())
+	//}
+	//
+	//err = channel.ExchangeDeclare("events", "topic", true, false, false, false, nil)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//message := amqp.Publishing{
+	//	Body: []byte("Hello World"),
+	//}
+	//
+	//err = channel.Publish("events", "some-routing-key", false, false, message)
+	//if err != nil {
+	//	panic("error while publishing message: " + err.Error())
+	//}
 
-	channel, err := connection.Channel()
-	if err != nil {
-		panic("could not open channel: " + err.Error())
-	}
-
-	err = channel.ExchangeDeclare("events", "topic", true, false, false, false, nil)
-	if err != nil {
-		panic(err)
-	}
-
-	message := amqp.Publishing{
-		Body: []byte("Hello World"),
-	}
-
-	err = channel.Publish("events", "some-routing-key", false, false, message)
-	if err != nil {
-		panic("error while publishing message: " + err.Error())
-	}
 
 }
 

@@ -42,6 +42,7 @@ func init() {
 
 func main() {
 
+	Test()
 	bookingHandler := controllers.NewBookingHandler()
 
 	r := mux.NewRouter()

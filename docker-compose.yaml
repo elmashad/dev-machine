@@ -3,7 +3,7 @@ version: '3'
 services:
 
   rabbitmq:
-    container_name: "rabbitmq"
+    container_name: "rabbitmq-test"
     image: rabbitmq:3-management
     hostname: "rabbit_node_2"
     ports:
@@ -17,36 +17,34 @@ services:
 
 
   nginx:
+    container_name: "nginx-test"
     image: nginx
     volumes:
-    - ./data/nginx/:/etc/nginx/conf.d
+    - ./data/nginx/:/etc/nginx/
     ports:
     - "80:80"
     restart: always
-    depends_on:
-    - publisher-app
-    - subscriber-app
-
     networks:
       - mynet1
 
-  publisher-app:
-    container_name: "publisher-go-app"
-    build: golang
-    volumes:
-    - .:/var/www
-    ports:
-    - "8022:8022"
-    networks:
-    - mynet1
-    depends_on:
-    - rabbitmq
-
-    working_dir: /var/www/publisher-app
-    command: "/var/www/publisher-app/start.sh"
+#  publisher-app:
+#    container_name: "publisher-go-app"
+#    build: golang
+#    volumes:
+#    - .:/var/www
+#    ports:
+#    - "8022:8022"
+#    networks:
+#    - mynet1
+#    depends_on:
+#    - rabbitmq
+#    - nginx
+#    working_dir: /var/www/publisher-app
+#    command: "/var/www/publisher-app/start.sh"
 
   subscriber-app:
     container_name: "subscriber-go-app"
+    hostname: subscriber-go-app
     build: golang
     volumes:
     - .:/var/www
@@ -56,7 +54,7 @@ services:
     - mynet1
     depends_on:
     - rabbitmq
-
+    - nginx
     working_dir: "/var/www/subscriber-app/"
     command: "/var/www/subscriber-app/start.sh"
 
@@ -65,7 +63,7 @@ services:
     image: mongo
     restart: always
     user: root
-    container_name: "mongodb"
+    container_name: "mongodb-test"
     ports:
     - "27017:27017"
     networks:
@@ -73,7 +71,7 @@ services:
 
   mysql:
     image: mysql:5.7
-    container_name: "mysqldb"
+    container_name: "mysqldb-test"
     restart: always
     ports:
     - "3308:3306"
